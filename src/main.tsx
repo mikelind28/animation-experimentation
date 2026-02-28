@@ -8,7 +8,7 @@ import Home from './pages/Home.tsx';
 import FallingSpheres from './pages/FallingSpheres.tsx';
 import MyProficiencies from './pages/MyProficiencies.tsx';
 import NatureSlideshow from './pages/NatureSlideshow.tsx';
-import ImageSlider from './pages/ImageSlider.tsx';
+import ImageSliders from './pages/ImageSliders.tsx';
 
 const router = createBrowserRouter([
   {
@@ -32,8 +32,8 @@ const router = createBrowserRouter([
         Component: NatureSlideshow,
       },
       {
-        path: '/image-slider',
-        Component: ImageSlider,
+        path: '/image-sliders',
+        Component: ImageSliders,
       },
     ]
   },

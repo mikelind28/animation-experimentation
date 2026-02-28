@@ -23,8 +23,8 @@ export default function Home() {
                 />
 
                 <ExperimentLink
-                    path="/image-slider"
-                    text="Image Slider" 
+                    path="/image-sliders"
+                    text="Image Sliders" 
                     imagePath=""           
                 />
             </div>

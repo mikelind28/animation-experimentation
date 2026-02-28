@@ -3,7 +3,6 @@ import { IoHomeOutline } from "react-icons/io5";
 
 export default function Header() {
     const location = useLocation();
-    console.log('location', location);
 
     let currentPage = '';
 
@@ -17,12 +16,15 @@ export default function Header() {
         case '/nature-slideshow':
             currentPage = 'Nature Slideshow';
             break;
+        case '/image-sliders':
+            currentPage = 'Image Sliders';
+            break;
         default:
             break;
     }
     
     return (
-        <header className="sticky top-0 bg-white w-full flex items-center gap-4 p-2">
+        <header className="z-100 sticky top-0 bg-white w-full flex items-center gap-4 p-2">
             <Link to='/' className="ml-2 text-2xl border border-black rounded-md bg-white">
                 <IoHomeOutline className="m-2"/>
             </Link>
