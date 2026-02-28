@@ -6,6 +6,9 @@ import './index.css'
 import App from './App.tsx'
 import Home from './pages/Home.tsx';
 import FallingSpheres from './pages/FallingSpheres.tsx';
+import MyProficiencies from './pages/MyProficiencies.tsx';
+import NatureSlideshow from './pages/NatureSlideshow.tsx';
+import ImageSlider from './pages/ImageSlider.tsx';
 
 const router = createBrowserRouter([
   {
@@ -19,7 +22,19 @@ const router = createBrowserRouter([
       {
         path: '/falling-spheres',
         Component: FallingSpheres,
-      }
+      },
+      {
+        path: '/my-proficiencies',
+        Component: MyProficiencies,
+      },
+      {
+        path: '/nature-slideshow',
+        Component: NatureSlideshow,
+      },
+      {
+        path: '/image-slider',
+        Component: ImageSlider,
+      },
     ]
   },
 ]);

@@ -23,8 +23,8 @@ export default function Header() {
     
     return (
         <header className="sticky top-0 bg-white w-full flex items-center gap-4 p-2">
-            <Link to='/' className="ml-2 p-2 text-2xl border border-black rounded-md">
-                <IoHomeOutline />
+            <Link to='/' className="ml-2 text-2xl border border-black rounded-md bg-white">
+                <IoHomeOutline className="m-2"/>
             </Link>
 
             <div>

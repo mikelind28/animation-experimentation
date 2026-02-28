@@ -167,7 +167,7 @@ export default function FallingSpheres() {
                 initial={{ width: '72px', height: '72px', borderRadius: '100% 100% 100% 100%' }}
                 animate={
                     optionsOpen 
-                    ? { width: '320px', height: '250px', borderRadius: '8px 8px 8px 8px'} 
+                    ? { width: '320px', height: '300px', borderRadius: '8px 8px 8px 8px'} 
                     : { width: '72px', height: '72px', borderRadius: '100% 100% 100% 100%' }
                 }
                 transition={{ duration: 0.4 }}
