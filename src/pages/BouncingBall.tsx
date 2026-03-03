@@ -8,10 +8,7 @@ export default function BouncingBall() {
 
     useEffect(() => {
         const main = mainRef.current;
-
         if (!main) return;
-
-        console.log('width:', main.clientWidth);
         
         const observer = new ResizeObserver(() => {
             const w = main.clientWidth;
@@ -79,13 +76,17 @@ export default function BouncingBall() {
                 />
             </svg>
 
-            <div className="h-20">
+            <div className="h-20 w-full">
                 <motion.p
                     key={mainWidth}
-                    initial={{ x: '150%' }}
-                    animate={{ x: '-150%' }}
-                    transition={{ duration: (mainWidth / 50), repeat: Infinity }}
-                    className="h-full mt-10 text-xl"
+                    initial={{ x: '100%',  }}
+                    animate={{ x: '-33%',  }}
+                    transition={{ 
+                        duration: mainWidth / 100, 
+                        repeat: Infinity, 
+                        ease: 'linear'
+                    }}
+                    className="p-2 w-full mt-10 text-lg font-stretch-120%"
                 >
                     Thanks for visiting ☺︎
                 </motion.p>

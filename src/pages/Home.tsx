@@ -3,7 +3,7 @@ import ImageLink from "../components/ImageLink";
 export default function Home() {
     return (
         <main className="p-4">
-            <div className="grid grid-cols-1 gap-6 xs:grid-cols-2 xs:gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+            <div className="grid grid-cols-1 gap-6 min-[35rem]:grid-cols-2 min-[35rem]:gap-4 min-[52rem]:grid-cols-3 min-[68rem]:grid-cols-4 min-[86rem]:grid-cols-5">
                 <ImageLink
                     path="/falling-spheres"
                     text="Falling Spheres" 

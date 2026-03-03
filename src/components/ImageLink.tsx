@@ -17,7 +17,7 @@ export default function ImageLink({ path, text, imagePath }: ImageLinkType) {
         style={{ backgroundImage: `url(${imagePath})`}}
       ></div>
 
-      <p className="w-full h-[4em] p-4 m-2 font-mono text-white text-2xl text-shadow-lg/100 bg-black/75 rounded-xl drop-shadow-lg/50 group-hover:drop-shadow-lg/75 transition-all duration-300">
+      <p className="w-full h-[4em] p-4 m-2 font-mono tracking-wider text-white text-2xl text-shadow-lg/100 bg-black/75 rounded-xl drop-shadow-lg/50 group-hover:drop-shadow-lg/75 transition-all duration-300">
         {text}
       </p>
     </Link>
