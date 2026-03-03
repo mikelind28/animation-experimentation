@@ -1,78 +1,94 @@
 import { createTheme, Slider, ThemeProvider, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { AnimatePresence, motion } from "motion/react";
-import { useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import { FaMoon } from 'react-icons/fa';
 import { FiSun } from "react-icons/fi";
 import { CiCircleInfo } from "react-icons/ci";
 import { IoCloseOutline } from "react-icons/io5";
 
 
-type SphereType = {
-    index?: number;
+type SphereConfig = {
     radius: number;
     xCoor: number;
     opacity: number;
     delay: number;
     duration: number;
-    hue: number;
+    blur: number;
 }
 
-function Sphere({ radius, xCoor, opacity, delay, duration, hue }: SphereType) {
-    let blur = 2;
-    // if the sphere gets a small radius with too large of blur, the blur appears clipped on the edges.
-    // this ensures that only large spheres get larger blurs.
-    // if radius < 40, blur = 1...3
-    // else if radius < 60, blur = 1...4
-    // else if radius < 80, blur = 2...7
-    // else blur = 3...12
-    switch (true) {
-        case radius < 40: {
-            blur = Math.floor((Math.random() * 2) + 1);
-            break;
-        }
-        case radius < 60: {
-            blur = Math.floor((Math.random() * 3) + 1);
-            break;
-        }
-        case radius < 80: {
-            blur = Math.floor((Math.random() * 5) + 2);
-            break;
-        }
-        case radius < 100: {
-            blur = Math.floor((Math.random() * 9) + 3);
-            break;
-        }
-        default: {
-            blur = Math.floor((Math.random() * 2) + 1);
-        }
-    }
+type SphereProps = SphereConfig & { hue: number };
 
+// helper functions:
+
+function getRandomRadius() {
+    return Math.floor(Math.random() * 80 + 20);
+}
+
+function getRandomXCoor() {
+    return Math.random() * 100;
+}
+
+function getRandomOpacity() {
+    return Math.floor(Math.random() * 95 + 10);
+}
+
+function getRandomDelay() {
+    return Math.random() * 10;
+}
+
+function getRandomDuration() {
+    return Math.random() * 2 + 5;
+}
+
+// if the blur is too big on a sphere with a small radius, its edges get clipped.
+// use smaller blurs for smaller spheres.
+function getRandomBlur(radius: number): number {
+    if (radius < 40) return Math.floor(Math.random() * 2 + 1);
+    if (radius < 60)  return Math.floor(Math.random() * 3 + 1);
+    if (radius < 80)  return Math.floor(Math.random() * 5 + 2);
+    if (radius < 100) return Math.floor(Math.random() * 9 + 3);
+    return Math.floor(Math.random() * 2 + 1);
+}
+
+function createSphereConfig(): SphereConfig {
+    const radius = getRandomRadius();
+    return {
+        radius,
+        xCoor: getRandomXCoor(),
+        opacity: getRandomOpacity(),
+        delay: getRandomDelay(),
+        duration: getRandomDuration(),
+        blur: getRandomBlur(radius),
+    };
+}
+
+const Sphere = memo(function Sphere({ radius, xCoor, opacity, delay, duration, blur, hue }: SphereProps) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
-            width={'100%'}
-            height={'100%'}
+            width='100%'
+            height='100%'
         >
-            <filter id='blur'>
+            <filter id={`blur-${radius}-${xCoor}`}>
                 <feGaussianBlur stdDeviation={blur} />
             </filter>
 
             <motion.circle
                 r={`${radius}`}
                 cx={`${xCoor}%`}
-                className={``}
-                filter={'url(#blur)'}
+                filter={`url(#blur-${radius}-${xCoor})`}
                 fill={`hsl(${hue} 100% 60%)`}
                 fillOpacity={`${opacity}%`}
                 initial={{ cy: '-20%' }}
                 animate={{ cy: '120%' }}
                 transition={{ delay: delay, type: 'tween', duration: duration, ease: [0.5, 0, 1, 1], repeat: Infinity }}
-                // style={{ fill: `oklch(80.9% 0.105 251.813)` }}
             />
         </svg>
-    )
-}
+    );
+});
+
+// slider styles
 
 const CustomSlider = styled(Slider)({
     color: 'rgba(120, 120, 120, 0.5)',
@@ -90,7 +106,7 @@ const CustomSlider = styled(Slider)({
             display: 'none',
         },
     },
-})
+});
 
 const theme = createTheme({
   components: {
@@ -128,35 +144,29 @@ const RainbowSlider = styled(Slider)({
 
 export default function FallingSpheres() {
     const [numberOfSpheres, setNumberOfSpheres] = useState(20);
-    const [hue, setHue] = useState(200);
-    const [darkModeOn, setDarkModeOn] = useState(false);
+    const [hue, setHue] = useState(50);
+    const [darkModeOn, setDarkModeOn] = useState(true);
     const [optionsOpen, setOptionsOpen] = useState(false);
-    
-    function getRandomRadius() {
-        const minRadius = 20;
-        const maxRadius = 100;
-        const randomRadius = Math.floor(Math.random() * (maxRadius - minRadius) + minRadius);
-        return randomRadius;
+
+    const configsRef = useRef<SphereConfig[]>([]);
+
+    if (configsRef.current.length === 0) {
+        // create an array of <Sphere />s using the createSphereConfig function
+        configsRef.current = Array.from({ length: numberOfSpheres }, createSphereConfig);
     }
 
-    function getRandomXCoor() {
-        return Math.random() * 100;
-    }
-
-    function getRandomOpacity() {
-        return Math.floor((Math.random() * 95) + 10);
-    }
-
-    function getRandomDelay() {
-        return Math.random() * 10;
-    }
-
-    function getRandomDuration() {
-        const minDuration = 5;
-        const maxDuration = 7;
-        const randomDuration = (Math.random() * (maxDuration - minDuration) + minDuration);
-        return randomDuration;
-    }
+    useEffect(() => {
+        const configs = configsRef.current;
+        if (numberOfSpheres > configs.length) {
+            // add new entries
+            for (let i = configs.length; i < numberOfSpheres; i++) {
+                configs.push(createSphereConfig());
+            }
+        } else if (numberOfSpheres < configs.length) {
+            // drop entries
+            configs.splice(numberOfSpheres);
+        }
+    }, [numberOfSpheres]);
     
     return (
         <main
@@ -164,11 +174,11 @@ export default function FallingSpheres() {
             style={{ backgroundColor: darkModeOn ? 'black' : 'white' }}
         >
             <motion.div 
-                initial={{ width: '72px', height: '72px', borderRadius: '100% 100% 100% 100%' }}
+                initial={{ width: '72px', height: '72px', borderRadius: '100%' }}
                 animate={
                     optionsOpen 
-                    ? { width: '320px', height: '300px', borderRadius: '8px 8px 8px 8px'} 
-                    : { width: '72px', height: '72px', borderRadius: '100% 100% 100% 100%' }
+                        ? { width: '320px', height: '300px', borderRadius: '8px'} 
+                        : { width: '72px', height: '72px', borderRadius: '100%' }
                 }
                 transition={{ duration: 0.4 }}
                 className={`
@@ -211,7 +221,7 @@ export default function FallingSpheres() {
                                     <p>Dark / Light background</p>
                                     <ToggleButtonGroup size="large" className="">
                                         <ToggleButton 
-                                            value={'darkMode'}
+                                            value='darkMode'
                                             onClick={() => setDarkModeOn(false)}
                                             selected={!darkModeOn}
                                             aria-label="light-mode"
@@ -220,7 +230,7 @@ export default function FallingSpheres() {
                                         </ToggleButton>
 
                                         <ToggleButton 
-                                            value={'lightMode'}
+                                            value='lightMode'
                                             onClick={() => setDarkModeOn(true)}
                                             selected={darkModeOn}
                                             aria-label="dark-mode"
@@ -257,20 +267,9 @@ export default function FallingSpheres() {
                 width={'100%'}
                 height={'100%'}
             >
-                {Array.from({ length: numberOfSpheres }).map((_, i) => {
-                    return (
-                        <Sphere 
-                            key={i}
-                            index={i}
-                            radius={getRandomRadius()}
-                            xCoor={getRandomXCoor()} 
-                            opacity={getRandomOpacity()}
-                            delay={getRandomDelay()}
-                            duration={getRandomDuration()}
-                            hue={hue}
-                        />
-                    )
-                })}
+                {configsRef.current.map((config, index) => (
+                    <Sphere key={index} {...config} hue={hue} />
+                ))}
             </svg>
         </main>
     )

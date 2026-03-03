@@ -19,17 +19,25 @@ export default function Header() {
         case '/image-sliders':
             currentPage = 'Image Sliders';
             break;
+        case '/bouncing-ball':
+            currentPage = 'Bouncing Ball';
+            break;
+        case '/':
+            currentPage = 'Home';
+            break;
         default:
             break;
     }
     
     return (
-        <header className="z-100 sticky top-0 bg-white w-full flex items-center gap-4 p-2">
-            <Link to='/' className="ml-2 text-2xl border border-black rounded-md bg-white">
-                <IoHomeOutline className="m-2"/>
-            </Link>
+        <header className="z-100 sticky top-0 bg-white w-full flex items-center p-2 font-mono">
+            { currentPage !== 'Home' &&
+                <Link to='/' className="ml-2 text-2xl border border-black rounded-md bg-white">
+                    <IoHomeOutline className="m-2"/>
+                </Link>
+            }
 
-            <div>
+            <div className="pl-4">
                 <h1 className="text-xl text-center">
                     Animation Experimentation
                 </h1>

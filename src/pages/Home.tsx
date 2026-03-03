@@ -1,31 +1,37 @@
-import ExperimentLink from "../components/ExperimentLink";
+import ImageLink from "../components/ImageLink";
 
 export default function Home() {
     return (
-        <main>
-            <div className="flex flex-col">
-                <ExperimentLink
+        <main className="p-4">
+            <div className="grid grid-cols-1 gap-6 xs:grid-cols-2 xs:gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+                <ImageLink
                     path="/falling-spheres"
                     text="Falling Spheres" 
-                    imagePath=""           
+                    imagePath="falling-spheres.gif"           
                 />
 
-                <ExperimentLink
+                <ImageLink
                     path="/my-proficiencies"
                     text="My Proficiencies" 
-                    imagePath=""           
+                    imagePath="my-proficiencies.gif"           
                 />
 
-                <ExperimentLink
+                <ImageLink
                     path="/nature-slideshow"
                     text="Nature Slideshow" 
-                    imagePath=""           
+                    imagePath="nature-slideshow.gif"           
                 />
 
-                <ExperimentLink
+                <ImageLink
                     path="/image-sliders"
                     text="Image Sliders" 
-                    imagePath=""           
+                    imagePath="image-sliders.gif"           
+                />
+
+                <ImageLink
+                    path="/bouncing-ball"
+                    text="Bouncing Ball" 
+                    imagePath="bouncing-ball.gif"           
                 />
             </div>
         </main>

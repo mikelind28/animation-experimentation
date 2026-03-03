@@ -9,6 +9,7 @@ import FallingSpheres from './pages/FallingSpheres.tsx';
 import MyProficiencies from './pages/MyProficiencies.tsx';
 import NatureSlideshow from './pages/NatureSlideshow.tsx';
 import ImageSliders from './pages/ImageSliders.tsx';
+import BouncingBall from './pages/BouncingBall.tsx';
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: '/image-sliders',
         Component: ImageSliders,
+      },
+      {
+        path: '/bouncing-ball',
+        Component: BouncingBall,
       },
     ]
   },

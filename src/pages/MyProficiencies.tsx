@@ -16,7 +16,7 @@ function Row({ row, invert }: { row: string[], invert: boolean }) {
     return (
         <motion.p 
             className={`
-                h-fit py-4 px-8 text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-nowrap overflow-x-hidden
+                font-bold italic h-fit py-4 px-8 text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-nowrap overflow-x-hidden
                 ${invert ? 'self-start bg-black text-white -translate-x-8' : 'self-end bg-white text-black'}
             `}
             style={{ translateX: invert ? invertScroll : scrollY, translateY: scrollY }}
@@ -51,7 +51,7 @@ export default function MyProficiencies() {
                     <motion.div
                         exit={{ opacity: 0 }}
                         transition={{ duration: 2 }} 
-                        className="px-5 py-2 rounded-3xl fixed bottom-4 flex gap-2 text-xl items-center justify-center bg-white drop-shadow-md/25 animate-bounce"
+                        className="px-5 py-2 md:px-6 md:py-3 lg:px-7 lg:py-4 rounded-3xl fixed bottom-8 flex gap-2 text-xl md:text-3xl lg:text-4xl items-center justify-center bg-white drop-shadow-md/25 animate-bounce"
                     >
                         Scroll! <FaArrowDownLong />
                     </motion.div>
