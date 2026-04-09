@@ -4,7 +4,7 @@
 
 ## Description
 
-Several animation tests (mostly interactive!), primarily using the [Motion](https://motion.dev) animation library. 
+Several animation tests (mostly interactive!), primarily using the [Motion](https://motion.dev) animation library.
 
 ## Technologies
 

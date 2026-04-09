@@ -1,51 +1,61 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
 import { createBrowserRouter } from "react-router";
 import { RouterProvider } from "react-router/dom";
-import './index.css'
-import App from './App.tsx'
-import Home from './pages/Home.tsx';
-import FallingSpheres from './pages/FallingSpheres.tsx';
-import MyProficiencies from './pages/MyProficiencies.tsx';
-import NatureSlideshow from './pages/NatureSlideshow.tsx';
-import ImageSliders from './pages/ImageSliders.tsx';
-import BouncingBall from './pages/BouncingBall.tsx';
+import "./index.css";
+import App from "./App.tsx";
+import Home from "./pages/Home.tsx";
+import FallingSpheres from "./pages/FallingSpheres.tsx";
+import MyProficiencies from "./pages/MyProficiencies.tsx";
+import NatureSlideshow from "./pages/NatureSlideshow.tsx";
+import ImageSliders from "./pages/ImageSliders.tsx";
+import BouncingBall from "./pages/BouncingBall.tsx";
+import ColorWheels from "./pages/ColorWheels.tsx";
+import { StyledEngineProvider } from "@mui/material/styles";
+import GlobalStyles from "@mui/material/GlobalStyles";
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     Component: App,
     children: [
       {
         index: true,
-        Component: Home
+        Component: Home,
       },
       {
-        path: '/falling-spheres',
+        path: "/falling-spheres",
         Component: FallingSpheres,
       },
       {
-        path: '/my-proficiencies',
+        path: "/my-proficiencies",
         Component: MyProficiencies,
       },
       {
-        path: '/nature-slideshow',
+        path: "/nature-slideshow",
         Component: NatureSlideshow,
       },
       {
-        path: '/image-sliders',
+        path: "/image-sliders",
         Component: ImageSliders,
       },
       {
-        path: '/bouncing-ball',
+        path: "/color-wheels",
+        Component: ColorWheels,
+      },
+      {
+        path: "/bouncing-ball",
         Component: BouncingBall,
       },
-    ]
+    ],
   },
 ]);
 
-createRoot(document.getElementById('root')!).render(
+createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <StyledEngineProvider enableCssLayer>
+      <GlobalStyles styles="@layer theme, base, mui, components, utilities;" />
+      <RouterProvider router={router} />
+    </StyledEngineProvider>
   </StrictMode>,
-)
+);
